@@ -39,6 +39,10 @@ class TemperatureConverterTest {
         boolean actual = temperatureConverter.isExtremeTemperature(celsius);
 
         // Assert
-        assertEquals(expected, actual);
+        assertEquals(actual, expected);
+
+
+        assertFalse(temperatureConverter.isExtremeTemperature(-40));
+        assertTrue(temperatureConverter.isExtremeTemperature(60));
     }
 }
