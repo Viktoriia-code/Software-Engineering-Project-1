@@ -2,7 +2,6 @@ package laskin;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -32,35 +31,37 @@ public class ExtraTest extends AbstractParent {
     public void testNollaa() {
         System.out.println("  Nollaa laskin.");
         laskin.nollaa();
-        assertEquals(0, laskin.annaTulos(), "Nollaus ei onnistunut");
+        assertEquals(0, laskin.annaTulos(), DELTA, "Nollaus ei onnistunut");
     }
 
     @Test
     public void testNelio2() {
         laskin.nelio(2);
-        assertEquals(4, laskin.annaTulos(), "Luvun 2 Neliöön korotus väärin");
+        assertEquals(4, laskin.annaTulos(), DELTA, "Luvun 2 Neliöön korotus väärin");
     }
 
     @Test
     public void testNelio4() {
         laskin.nelio(4);
-        assertEquals(16, laskin.annaTulos(),"Luvun 4 neliöön korotus väärin");
+        assertEquals(16, laskin.annaTulos(), DELTA, "Luvun 4 neliöön korotus väärin");
     }
 
     @Test
     public void testNelio5() {
         laskin.nelio(5);
-        assertEquals(25, laskin.annaTulos(), DELTA,"Luvun 5 neliöön korotus väärin");
+        assertEquals(25, laskin.annaTulos(), DELTA, "Luvun 5 neliöön korotus väärin");
     }
     @Test
     public void testNeliojuuri2() {
         laskin.neliojuuri(2);
-		// Tähän assertXXX(), odotetun tuloksen tulee olla (int)Math.sqrt(2)
+        // Tähän assertXXX(), odotetun tuloksen tulee olla (double)Math.sqrt(2)
+        assertEquals(Math.sqrt(2), laskin.annaTulos(), DELTA, "Luvun 2 neliöjuuri väärin");
     }
     
     @Test
     @DisplayName("Testaa negatiivinen neliöjuuri")
     public void testNeliojuuriNegat() {
-         fail("TESTIÄ EI OLE VIELÄ LAADITTU.");
+        ArithmeticException poikkeus = assertThrows(ArithmeticException.class, () -> laskin.neliojuuri(-2));
+        assertEquals("Negatiiviselle luvulle ei voi laskea neliöjuurta", poikkeus.getMessage());
     }
 }
